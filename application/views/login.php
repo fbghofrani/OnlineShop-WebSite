@@ -5,9 +5,10 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('css/style.css'); ?>">
 </head>
 <body class="winter-theme">
+    
+    <?//= session('error') ? '<p>' . session('error') . '</p>' : '' ?>
+    <form  action="<?php echo base_url('AuthController/login'); ?>" method="post">
     <h1>Login</h1>
-    <?= session('error') ? '<p>' . session('error') . '</p>' : '' ?>
-    <form action="/login" method="post">
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Password" required>
         <button type="submit">Login</button>

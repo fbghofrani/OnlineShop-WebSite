@@ -21,4 +21,15 @@ class UserModel extends CI_Model {
             return false;
         }
     }
+
+    public function get_user_by_id($id) {
+        $query = $this->db->get_where('users', ['id' => $id]);
+        return $query->row_array(); // Return a single user's data as an array
+    }
+    
+    public function update_user($id, $data) {
+        $this->db->where('id', $id);
+        return $this->db->update('users', $data); // Update the user's information
+    }
+    
 }

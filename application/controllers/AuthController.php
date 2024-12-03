@@ -104,6 +104,57 @@ class AuthController extends CI_Controller {
         $this->load->view('login');
     }
 
+
+
+    // Method to load the Edit Profile Page
+    // public function edit_profile($user_id) {
+    //     // Fetch user data from the database
+    //     $data['user'] = $this->UserModel->get_user_by_id($user_id);
+
+    //     // Load the edit profile page with user data
+    //     $this->load->view('edit_profile', $data);
+    // }
+
+    public function edit_profile($user_id = null) {
+        if (!$user_id) {
+            show_error('User ID is required to edit profile.', 400);
+        }
+    
+        // Fetch user data
+        $data['user'] = $this->UserModel->get_user_by_id($user_id);
+    
+        // Check if user exists
+        if (!$data['user']) {
+            show_error('User not found.', 404);
+        }
+    
+        // Load the edit profile page
+        $this->load->view('edit_profile', $data);
+    }
+    
+
+    // Method to handle profile update
+    public function update_profile() {
+        // Get the user ID from the session or hidden input
+        $user_id = $this->input->post('user_id');
+
+        // Collect updated data from the form
+        $updated_data = [
+            'full_name' => $this->input->post('full_name'),
+            'email' => $this->input->post('email'),
+        ];
+
+        // Update user info in the database
+        if ($this->UserModel->update_user($user_id, $updated_data)) {
+            $this->session->set_flashdata('message', 'Profile updated successfully!');
+        } else {
+            $this->session->set_flashdata('error', 'Failed to update profile. Try again.');
+        }
+
+        // Redirect to edit profile page
+        redirect('AuthController/edit_profile/' . $user_id);
+    }
+
 }
 
 

@@ -60,9 +60,12 @@ $route['translate_uri_dashes'] = FALSE;
 // $route->post('/login', 'AuthController::processLogin');
 $route['register'] = 'AuthController/register';
 $route['login'] = 'AuthController/login'; 
-$route['default_controller'] = 'AuthController/register';
+//$route['default_controller'] = 'AuthController/register';
 $route['authcontroller/login'] = 'AuthController/login';
 //$route['default_controller'] = 'AuthController/login';
+$route['default_controller'] = 'AuthController/edit_profile';
+$route['edit-profile/(:num)'] = 'AuthController/edit_profile/$1';
+$route['update-profile'] = 'AuthController/update_profile';
 
 
 
