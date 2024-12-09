@@ -68,24 +68,30 @@ class AuthController extends CI_Controller {
                 $user_data = array(
                     'FullName' => $this->input->post('full_name'),
                     'Email' => $this->input->post('email'),
-                    'Password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT) // Encrypt password
+                    'PasswordHash' =>$this->input->post('password')
                 );
 
-                // // Insert user into the database
-                // if ($this->UserModel->insertUser($user_data)) {
-                //     // Success: Set a flash message and redirect to login
-                //     $this->session->set_flashdata('message', 'Registration successful! Please log in.');
-                //     redirect('AuthController/login');
-                // } else {
+                // Insert user into the database
+                $result=$this->UserModel->insertUser($user_data);
+                if ($result) {
+                    $this->load->view('login');
+                    // Success: Set a flash message and redirect to login
+                    // $this->session->set_flashdata('message', 'Registration successful! Please log in.');
+                    // redirect('AuthController/login');
+                } 
+                
+                // else {
                 //     // Failure: Set error flash message
                 //     $this->session->set_flashdata('error', 'There was an error with the registration. Please try again.');
                 //     redirect('AuthController/register');
                 // }
             }
-        } else {
-            // If no POST data, load the register page
-            $this->load->view('register');
-        }
+        } 
+        
+        // else {
+        //     // If no POST data, load the register page
+        //     $this->load->view('register');
+        // }
 
     
     }
@@ -155,6 +161,30 @@ class AuthController extends CI_Controller {
         redirect('AuthController/edit_profile/' . $user_id);
     }
 
+    public function show_home(){
+        $this->load->view('home');
+    }
+    
+    public function login_user(){
+        $email=$this->input->post('email');
+        $password=$this->input->post('password');
+
+        $result=$this->UserModel->login($email,$password);
+
+        if ($result==False){
+            $this->session->set_flashdata('error','Wrong pass or email!');
+            $this->load->view('login');
+        }
+        else{
+            $userID= $this->UserModel->get_User_ID($email);
+
+            if($userID){
+			    $this->load->library('session');
+		        $this->session->set_userdata('userID', $userID);
+                $this->load->view('register');
+            }
+        }
+    }
 }
 
 

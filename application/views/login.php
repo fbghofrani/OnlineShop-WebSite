@@ -6,13 +6,17 @@
 </head>
 <body class="winter-theme">
     
-    <?//= session('error') ? '<p>' . session('error') . '</p>' : '' ?>
-    <form  action="<?php echo base_url('AuthController/login'); ?>" method="post">
+    <form  action="<?php echo base_url() ?>index.php/AuthController/login_user" method="post">
     <h1>Login</h1>
+    <?php 
+    if($this->session->flashdata('error')){
+        echo '<font color="red">'.$this->session->flashdata('error').'</font>';
+    }
+    ?>
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Password" required>
         <button type="submit">Login</button>
-        <p>Don't have an account? <a href="<?php echo base_url('AuthController/regi'); ?>">Register</a></p>
+        <p>Don't have an account? <a href="<?php echo base_url() ?>index.php/AuthController/regi" >Register</a></p>
     </form>
 </body>
 </html>

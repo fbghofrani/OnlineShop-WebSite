@@ -17,7 +17,7 @@
     <?php endif; ?>
 
     <!-- Registration Form -->
-    <form action="<?php echo base_url('AuthController/register'); ?>" method="POST">
+    <form action="<?php echo base_url() ?>index.php/AuthController/register" method="POST">
     <h1 align="center">Register</h1>
         <label for="full_name">Full Name:</label>
         <input type="text" name="full_name" id="full_name" required><br>
@@ -35,7 +35,7 @@
 
 
          <!-- Link to login page -->
-    <p style="color:#0d0e2e;">Already have an account? <a href="<?php echo base_url('AuthController/login'); ?>">Login here</a></p>
+    <p style="color:#0d0e2e;">Already have an account? <a href="<?php echo base_url() ?>index.php/AuthController/login" >Login here</a></p>
     </form>
 
    
